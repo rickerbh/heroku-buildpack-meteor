@@ -50,6 +50,12 @@ build() {
   (
     head "Building Meteor App Bundle"
     cd $APP_SOURCE
+
+    # If npm is in the project, run npm install.
+    if [ -e "$APP_SOURCE"/package.json ]; then
+      npm install
+    fi
+
     # can't build with these platforms enabled, it looks like
     set +e  # these next few are allowed to exit nonzero
     grep -Fxq ios .meteor/platforms
