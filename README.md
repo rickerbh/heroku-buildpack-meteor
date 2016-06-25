@@ -1,6 +1,6 @@
 # Heroku buildpack for meteor
 
-#### First fork uses Node 0.12 which is compatiable with Meteor 1.3
+#### This fork uses Node 0.12 which is compatiable with Meteor 1.3
 ## Usage
 
 ```
