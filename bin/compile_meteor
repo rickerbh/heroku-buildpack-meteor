@@ -70,6 +70,12 @@ build() {
     meteor build ../build --directory 2>&1 | indent
     head "Installing App's NPM Dependencies"
     (cd ../build/bundle/programs/server && npm install 2>&1 | indent)
+    head "Removing bundled bcrypt"
+    rm -rf npm/node_modules/meteor/npm-bcrypt/node_modules/bcrypt
+    head "Installing bcrypt from npm"
+    npm install bcrypt
+    head "Copying bcrypt to meteor npm-bcrypt dir"
+    cp -r node_modules/bcrypt npm/node_modules/meteor/npm-bcrypt/node_modules
     cd $BUILD_DIR && rm -rf $APP_SOURCE
   )
 }
