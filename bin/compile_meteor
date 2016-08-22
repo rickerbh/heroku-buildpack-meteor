@@ -53,7 +53,8 @@ build() {
 
     # If npm is in the project, run npm install.
     if [ -e "$APP_SOURCE"/package.json ]; then
-      npm install
+      head "Installing NPM dependencies"
+      npm install 2>&1 | indent
     fi
 
     # can't build with these platforms enabled, it looks like
@@ -68,14 +69,6 @@ build() {
     fi
     set -e  # back to failing if any command fails
     meteor build ../build --directory 2>&1 | indent
-    head "Installing App's NPM Dependencies"
-    (cd ../build/bundle/programs/server && npm install 2>&1 | indent)
-    head "Removing bundled bcrypt"
-    rm -rf npm/node_modules/meteor/npm-bcrypt/node_modules/bcrypt
-    head "Installing bcrypt from npm"
-    npm install bcrypt
-    head "Copying bcrypt to meteor npm-bcrypt dir"
-    cp -r node_modules/bcrypt  ../build/bundle/programs/server/npm/node_modules/meteor/npm-bcrypt/node_modules
     cd $BUILD_DIR && rm -rf $APP_SOURCE
   )
 }
